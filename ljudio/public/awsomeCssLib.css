@@ -24,18 +24,24 @@
     color: #FF4C29;
 }
 
-.standard{
+.wrapper{
     width: 80vw;
     margin: auto;
     color: white;
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
-    align-content: center;
-    justify-content: center;
+}
+
+.home-wrapper{
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
 }
 
 .center{
+    display: flex;
+    flex-direction: column;
     text-align: center;
 }
 
@@ -43,7 +49,7 @@
     display: flex;
     width: 70%;
     height: 30px;
-    border: 1px rgba(255, 76, 41, 0.9) solid;
+    border: 0.1em rgba(255, 76, 41, 0.6) solid;
     border-radius: 25px;
     outline: none;
     font-size: 1.5rem;
@@ -52,20 +58,28 @@
     background-color: rgba(255,76,41,0.05);
     color: white;
     padding: 5px;
-    padding-left: 20px;
     margin: 50px auto;
+}
+
+.hero-wrapper{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-wrapper{
+    flex-grow: 1;
 }
 
 ::placeholder{
     color: rgba(255,255,255,0.1);
     font-size: 1.3rem;
-    text-justify: center;
 }
 
 .standard-list{
     list-style: none;
     line-height: 0.8;
-    margin: auto;
+    margin-top: auto;
 }
 .first-row{
     opacity: 0.1;
@@ -90,6 +104,10 @@
 
 .ljudio-btn-orange:hover{
     background-color: #f5907b;
+}
+
+.ljudio-btn-orange:active{
+    background-color: #d3391b;
 }
 
 .search-form{
