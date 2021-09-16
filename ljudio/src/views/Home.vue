@@ -1,19 +1,13 @@
 <template>
   <div class="home-wrapper">
-    <div class="top-spacer"></div>
-    <div class="center">
-      <div class="hero-wrapper">
-        <ul class="standard-list hero">
-          <li class="first-row"><span>Your music</span></li>
-          <li class="second-row"><span>Your sound</span></li>
-          <li class="third-row"><span>Your</span><span class="hero orange"> Ljudio</span></li>
-        </ul>
-      </div>
-      <div class="search-wrapper">
-        <Search/> 
-      </div>
+      <ul class="home-list hero">
+        <li class="home-list-item first-row"><span>Your music</span></li>
+        <li class="home-list-item second-row"><span>Your sound</span></li>
+        <li class="home-list-item"><span>Your</span><span class="hero orange"> Ljudio</span></li>
+      </ul>
+    <div class="search-wrapper">
+      <Search/> 
     </div>
-    <div class="bottom-spacer"></div>
   </div>
 </template>
 
@@ -27,17 +21,28 @@ export default {
     Search,
   }
 }
-
 </script>
 
 <style scoped>
-.top-spacer{
-  flex-grow: 2;
+.home-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.center{
-  flex-grow: 6;
+.home-list{
+  list-style: none;
+  line-height: 0.8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
-.bottom-spacer{
-  flex-grow: 2;
+.first-row{
+  opacity: 0.1;
+  font-size: 4rem;
+}
+.second-row{
+  opacity: 0.2;
+  font-size: 4.4rem;
 }
 </style>

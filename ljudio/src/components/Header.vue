@@ -12,13 +12,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     a{
         color: white;
         text-decoration: none;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         font-size: 1.10rem;
-        padding: 15px;
+        margin-right: 2rem;
     }
     a:hover{
         color: #FF4C29;

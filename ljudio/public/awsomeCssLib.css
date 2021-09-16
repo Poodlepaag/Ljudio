@@ -2,94 +2,24 @@
     margin: 0;
     padding: 0;
 }
-
 .darkest{
     background-color: #082032;
 }
-
-.darker{
-    background-color: #2C394B;
-}
-
-.dark{
-    background-color: #334756;
-}
-
 .hero{
     font-size: 5rem;
     font-family: 'Righteous', cursive;
 }
-
 .hero.orange{
     color: #FF4C29;
 }
-
-.wrapper{
-    width: 80vw;
-    margin: auto;
-    color: white;
-    min-height: 90vh;
-    display: flex;
-    flex-direction: column;
+::-webkit-scrollbar{
+    display: none;
 }
-
-.home-wrapper{
-    display: flex;
-    flex-direction: column;
-    min-height: 90vh;
-}
-
-.center{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-
-.search-field{
-    display: flex;
-    width: 70%;
-    height: 30px;
-    border: 0.1em rgba(255, 76, 41, 0.6) solid;
-    border-radius: 25px;
-    outline: none;
-    font-size: 1.5rem;
-    font-weight: lighter;
-    text-align: center;
-    background-color: rgba(255,76,41,0.05);
-    color: white;
-    padding: 5px;
-    margin: 50px auto;
-}
-
-.hero-wrapper{
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.search-wrapper{
-    flex-grow: 1;
-}
-
-::placeholder{
-    color: rgba(255,255,255,0.1);
-    font-size: 1.3rem;
-}
-
 .standard-list{
     list-style: none;
     line-height: 0.8;
     margin-top: auto;
 }
-.first-row{
-    opacity: 0.1;
-    font-size:4rem;
-}
-.second-row{
-    opacity: 0.2;
-    font-size: 4.4rem;
-}
-
 .ljudio-btn-orange{
     background-color: #FF4C29;
     color: white;
@@ -101,15 +31,12 @@
     font-family: 'Righteous', cursive;
     font-size: 1.5rem;
 }
-
 .ljudio-btn-orange:hover{
     background-color: #f5907b;
 }
-
 .ljudio-btn-orange:active{
     background-color: #d3391b;
 }
-
 .search-form{
     display: flex;
     flex-direction: column;
