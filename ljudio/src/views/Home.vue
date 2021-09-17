@@ -4,27 +4,21 @@
         <li class="home-list-item first-row"><span>Your music</span></li>
         <li class="home-list-item second-row"><span>Your sound</span></li>
         <li class="home-list-item"><span>Your</span><span class="hero orange"> Ljudio</span></li>
+        <button class="btn-search ljudio-btn-orange" @click="$router.push('search')">Browse Ljudio</button>
       </ul>
-    <div class="search-wrapper">
-      <Search/> 
-    </div>
   </div>
 </template>
 
 <script>
 
-import Search from '../components/Search.vue';
-
 export default {
   name: 'Home',
-  components: {
-    Search,
-  }
 }
 </script>
 
 <style scoped>
 .home-wrapper{
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -1,12 +1,12 @@
 <template>
   <div class="app-wrapper">
-    <header>
-      <Header/>
+    <header class="app-header">
+      <Header id="header-component"/>
     </header>
-    <main>
+    <main class="app-main">
       <router-view/>
     </main>
-    <footer>
+    <footer class="app-footer">
       <Footer/>
     </footer>
   </div>
@@ -26,25 +26,28 @@ export default {
 
 <style scoped>
 .app-wrapper{
-  height: 100%;
+  min-height: 97vh;
+  height: 100vh;
+  max-height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   color: white;
 }
-header{
-  flex-grow: .5;
-  display: flex;
+.app-header{
+  width: 60%;
+  margin: auto;
   align-items: center;
 }
-main{
-  flex-grow: 30;
-  display: flex;
-  flex-direction: column;
+.app-main{
+  width: 60%;
+  margin: auto;
+  flex-grow: 1;
   justify-content: center;
-  overflow-x: hidden;
-  height: 100%;
+  overflow: scroll;
 }
-footer{
-  flex-grow: 4;
+.app-footer{
+  width: 100%;
+  height: 100px;
 }
 </style>

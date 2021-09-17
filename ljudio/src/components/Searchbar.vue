@@ -1,8 +1,7 @@
 <template>
     <div>
-        <form name="search" v-on:keyup.enter="createSearch" class="search-form" v-on:submit.prevent="onSubmit">
+        <form name="searchform" v-on:keyup="createSearch" class="search-form" v-on:submit.prevent="onSubmit">
             <input type="text" name="searchstring" class="search-field" placeholder="Search Ljudio library" id="search-field" autocomplete="off">
-            <button class="ljudio-btn-orange" id="form-button" v-on:click="createSearch">Search</button>
         </form>
     </div>
 </template>
@@ -14,7 +13,7 @@ export default {
             let searchString = document.getElementById('search-field');
             this.$store.dispatch('getArtistResults', searchString.value)
             this.$store.dispatch('getSongResults', searchString.value)
-            this.$router.push('/library');
+            this.$router.push('/search');
         }
     }
 }

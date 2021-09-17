@@ -15,11 +15,6 @@
 ::-webkit-scrollbar{
     display: none;
 }
-.standard-list{
-    list-style: none;
-    line-height: 0.8;
-    margin-top: auto;
-}
 .ljudio-btn-orange{
     background-color: #FF4C29;
     color: white;
@@ -30,16 +25,11 @@
     border: none;
     font-family: 'Righteous', cursive;
     font-size: 1.5rem;
+    margin-top: 2rem;
 }
 .ljudio-btn-orange:hover{
     background-color: #f5907b;
 }
 .ljudio-btn-orange:active{
     background-color: #d3391b;
-}
-.search-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
