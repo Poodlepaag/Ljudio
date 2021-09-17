@@ -12,12 +12,9 @@ export default {
     methods: {
         createSearch(){
             let searchString = document.getElementById('search-field');
-            this.$store.dispatch('getArtistResults', searchString.value).then( () =>{
-                this.$store.dispatch('getSongResults', searchString.value).then( () =>{
-                    searchString.value = "";
-                    this.$router.push('/library');
-                })
-            })
+            this.$store.dispatch('getArtistResults', searchString.value)
+            this.$store.dispatch('getSongResults', searchString.value)
+            this.$router.push('/library');
         }
     }
 }
