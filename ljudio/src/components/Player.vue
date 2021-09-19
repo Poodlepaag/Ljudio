@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="extra-controller">
-      <input type="range" min="0" max="100" value="20" class="volume-slider" v-on:change="volumeControl" id="myVolume">
+      <input type="range" min="0" max="100" value="20" class="volume-slider" v-on:mousemove="volumeControl" id="myVolume">
     </div>
   </div>
 </template>
@@ -31,8 +31,7 @@ export default {
       window.player.pauseVideo()
     },
     volumeControl(){
-      window.player.volume = document.getElementById('myVolume').value;
-      console.log(window.player.volume);
+      window.player.setVolume(document.getElementById('myVolume').value);
     }
   },
   computed: {
