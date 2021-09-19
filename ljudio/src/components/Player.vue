@@ -22,20 +22,14 @@
 
 <script>
 export default {
-  Data(){
-    return{
-      
-    }
-  },
   methods:{
     play(id){
-      // calling global variable
       window.player.loadVideoById(id)
       window.player.playVideo()
     },
     pause(){
       window.player.pauseVideo()
-    }
+    },
   }
 }
 </script>

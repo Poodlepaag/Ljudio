@@ -6,7 +6,7 @@
         </div>
         <ul>
             <li v-for="(song, index) in getUpdatedSongResults" v-bind:key="index" class="results-item">
-                <a class="results-item-link" v-on:click.prevent="click" href="#">
+                <a class="results-item-link" v-on:click.prevent="click" v-on:click="toggleResultMenu()" href="#">
                     <p class="main-text">{{ song.name }}</p>
                     <p class="sub-text">{{ song.artist.name}}</p>
                 </a>
@@ -17,7 +17,7 @@
         </div>
         <ul>
             <li v-for="(artist, index) in getUpdatedArtistResults" v-bind:key="index" class="results-item">
-                <a class="results-item-link" href="#">
+                <a class="results-item-link" v-on:click.prevent="click" href="#">
                     <p class="main-text">{{ artist.name }}</p>
                 </a>
             </li>
@@ -50,6 +50,11 @@ export default {
             return this.$store.state.searchString;
         }
     },
+    methods:{
+        toggleResultMenu(song){
+            console.log(song);
+        }
+    }
 }
 </script>
 
@@ -82,6 +87,8 @@ h2{
     display: flex;
     justify-content: center;
     flex-direction: column;
+    height: 100%;
+    cursor:default;
 }
 .results-item>.results-item-link>.main-text{
     font-size: 1.2rem;

@@ -5,6 +5,11 @@ export default createStore({
     songResults: [],
     artistResults: [],
     searchString: '',
+
+    // Player specific
+    loadedSong: {},
+    previousSongs: [],
+    songQueue: [],
   },
   mutations: {
     setArtistResults(state, data){
@@ -15,7 +20,7 @@ export default createStore({
     },
     setSearchString(state, data){
       state.searchString = data;
-    }
+    },
   },
   actions: {
     async getArtistResults({commit}, searchString){
