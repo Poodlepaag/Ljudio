@@ -7,7 +7,17 @@ export default createStore({
     searchString: '',
 
     // Player specific
-    loadedSong: {},
+    loadedSong: {
+      name: '',
+      artist: {
+        name: ''
+      },
+      thumbnails: [
+        {
+          url: '',
+        }
+      ]
+    },
     previousSongs: [],
     songQueue: [],
   },
@@ -20,6 +30,9 @@ export default createStore({
     },
     setSearchString(state, data){
       state.searchString = data;
+    },
+    setLoadedSong(state, data){
+      state.loadedSong = data;
     },
   },
   actions: {
@@ -35,6 +48,6 @@ export default createStore({
       let data = await response.json();
       console.log(data);
       commit('setSongResults', data);
-    }
+    },
   },
 })

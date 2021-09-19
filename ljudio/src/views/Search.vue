@@ -6,7 +6,7 @@
         </div>
         <ul>
             <li v-for="(song, index) in getUpdatedSongResults" v-bind:key="index" class="results-item">
-                <a class="results-item-link" v-on:click.prevent="click" v-on:click="toggleResultMenu()" href="#">
+                <a class="results-item-link" v-on:click.prevent="click" v-on:dblclick="setLoadedSong(song)" href="#">
                     <p class="main-text">{{ song.name }}</p>
                     <p class="sub-text">{{ song.artist.name}}</p>
                 </a>
@@ -48,12 +48,14 @@ export default {
         },
         getUpdatedSearchString(){
             return this.$store.state.searchString;
-        }
+        },
     },
     methods:{
-        toggleResultMenu(song){
-            console.log(song);
-        }
+        setLoadedSong(song){
+            window.player.loadVideoById(song.videoId);
+            window.player.playVideo();
+            this.$store.state.loadedSong = song;
+        },
     }
 }
 </script>
@@ -96,6 +98,7 @@ h2{
 }
 .results-item>.results-item-link>.sub-text{
     font-size: 0.8rem;
+    margin-left: 0.1rem;
     color: gray;
 }
 
