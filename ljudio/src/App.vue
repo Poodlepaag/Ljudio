@@ -45,9 +45,12 @@ export default {
   flex-grow: 1;
   justify-content: center;
   overflow: scroll;
+  padding-bottom: 7rem;
 }
 .app-footer{
   width: 100%;
-  height: 100px;
+  height: 7rem;
+  position: fixed;
+  bottom: 0;
 }
 </style>

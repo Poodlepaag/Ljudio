@@ -64,7 +64,6 @@ h2{
 }
 .search-wrapper{
     width: 100%;
-    max-height: 100%;
     display: flex;
     flex-direction: column;
 }
