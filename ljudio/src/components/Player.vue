@@ -1,13 +1,14 @@
 <template>
   <div class="player-wrapper">
-    <div class="song-information">
-      <p class="song-name">{{ loadedSong.name }}</p>
-      <p class="artist-name">{{ loadedSong.artist.name }}</p>
+    <div class="song-information" v-if="isLoaded == true">
+      <span class="statusOfPlayer" id="statusOfPlayer"> Now playing</span>
+      <span class="song-name">{{ loadedSong.name }}</span>
+      <span class="artist-name">{{ loadedSong.artist.name }}</span>
     </div>
     <div class="player-controller">
       <div class="buttons-wrapper">
         <button class="btn-small" id="prevButton" v-on:click="previous"><i class="fas fa-backward white"></i></button>
-        <button class="btn-normal" v-on:click="play"><i class="fas fa-play white" id="playOrPause"></i></button>
+        <button class="btn-normal" v-on:click="playAndPause"><i class="fas fa-play white" id="playOrPause"></i></button>
         <button class="btn-small" id="nextButton" v-on:click="next"><i class="fas fa-forward white"></i></button>
       </div>
     </div>
@@ -19,60 +20,71 @@
 
 <script>
 export default {
-  data() {
-    return {
-      currentTime: 0,
+  data(){
+    return{
+      isLoaded: false,
     }
   },
   methods:{
-    play(){
+    playAndPause(){
+      this.isLoaded = true;
       if(window.player.getPlayerState() === 1){
         window.player.pauseVideo();
-        let icon = document.getElementById('playOrPause')
+        let icon = document.getElementById('playOrPause');
+        let statusText = document.getElementById('statusOfPlayer');
         icon.classList.remove('fa-pause');
-        icon.classList.add('fa-play')
-        
+        icon.classList.add('fa-play');
+        statusText.innerHTML = "Paused";
       }
       else{
         window.player.playVideo();
         let icon = document.getElementById('playOrPause')
+        let statusText = document.getElementById('statusOfPlayer');
         icon.classList.remove('fa-play');
-        icon.classList.add('fa-pause')
+        icon.classList.add('fa-pause');
+        statusText.innerHTML = "Now playing";
       }
     },
     volumeControl(){
       window.player.setVolume(document.getElementById('myVolume').value);
     },
     next(){
-      if(this.songQueue.length > 0){
-        this.$store.dispatch('moveFromLoadedToPrevious');
-        this.$store.dispatch('nextSong');
-        window.player.loadVideoById(this.loadedSong);
+      this.isLoaded = true;
+      if(this.queue.length > 0){
+        this.$store.dispatch('unloadAndSendToPrevious');
+        this.$store.dispatch('loadByFetchFromQueue');
+        window.player.loadVideoById(this.$store.state.loadedSong);
         window.player.playVideo();
+        this.playAndPause();
       }
     },
     previous(){
+      this.isLoaded = true;
       if(this.previousSongs.length > 0){
-        this.$store.dispatch('moveFromPreviousToLoaded');
+        this.$store.dispatch('unloadAndSendToQueue');
+        this.$store.dispatch('loadByFetchFromPrevious');
         window.player.loadVideoById(this.$store.state.loadedSong);
         window.player.playVideo();
+        this.playAndPause();
+        if(this.previousSongs.length === 0){
+          this.isLoaded = false;
+        }
       }
     },
   },
   computed: {
     loadedSong(){
+      this.isLoaded = true;
       return this.$store.state.loadedSong;
     },
-    songQueue(){
-      return this.$store.state.songQueue;
+    queue(){
+      return this.$store.state.queue;
     },
     previousSongs(){
       return this.$store.state.previousSongs;
     }
   },
 }
-
-
 </script>
 
 <style scoped>
@@ -90,14 +102,28 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  padding-left: 1rem;
 }
 
+.song-information>.statusOfPlayer{
+  color: #FF4C29;
+}
 .song-information>.song-name{
   font-size: 1.2rem;
+  display: inline-block;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden !important;
+  white-space: nowrap;
 }
-.song-information>.arist-name{
+.song-information>.artist-name{
   font-size: 0.8rem;
+  color: gray;
+  display: inline-block;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden !important;
+  white-space: nowrap;
 }
 
 .player-controller{

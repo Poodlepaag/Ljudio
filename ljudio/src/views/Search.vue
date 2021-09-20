@@ -12,7 +12,7 @@
                         <span class="sub-text">{{ song.artist.name}}</span>
                     </div>
                     <div class="results-song-alternatives">
-                        <button class="add-to-playlist" v-on:click="addToSongQueue(song)">Add To Queue</button>
+                        <i class="fas fa-plus" id="addToQueueIcon" v-on:click="addToQueue(song)"></i>
                     </div>
                 </a>
             </li>
@@ -23,7 +23,7 @@
         <ul id="listOfArtists">
             <li v-for="(artist, index) in getUpdatedArtistResults" v-bind:key="index" class="results-item">
                 <a class="results-item-link" v-on:click.prevent="click" href="#">
-                    <p class="main-text">{{ artist.name }}</p>
+                    <span class="main-text">{{ artist.name }}</span>
                 </a>
             </li>
         </ul>
@@ -39,13 +39,6 @@ export default {
     components: {
         Searchbar,
     },
-    data() {
-        return {
-            results: [],
-            numberOfSongs: 0,
-            numberOfArtists: 0,
-        }
-    },
     computed: {
         getUpdatedArtistResults(){
             return this.$store.state.artistResults.content;
@@ -58,11 +51,23 @@ export default {
         },
     },
     methods:{
+        // Player related (Not directly)
         setLoadedSong(song){
+            if(this.$store.state.loadedSong){
+                this.$store.dispatch('unloadAndSendToPrevious')
+            }
+            this.$store.dispatch('setLoadedSong', song);
             window.player.loadVideoById(song.videoId);
             window.player.playVideo();
-            this.$store.state.loadedSong = song;
         },
+        addToQueue(song){
+            let nextButton = document.getElementById('nextButton');
+            nextButton.disabled = false;
+            this.$store.dispatch('addToQueue', song);
+            console.log(this.$store.state.songQueue);
+        },
+
+        // Visual settings only
         toggleSongs(){
             var listOfSongs = document.getElementById('listOfSongs');
 
@@ -83,17 +88,15 @@ export default {
                 listOfArtists.style.display = "none";
             }
         },
-        addToSongQueue(song){
-            let nextButton = document.getElementById('nextButton');
-            nextButton.disabled = false;
-            this.$store.state.songQueue.push(song);
-            console.log(this.$store.state.songQueue);
-        }
     }
 }
+
 </script>
 
 <style scoped>
+#addToQueueIcon{
+    font-size: 1.5rem;
+}
 h2{
     color: #FF4C29;
 }
@@ -131,11 +134,21 @@ h2{
 .results-item>.results-item-link>.results-song-information>.main-text{
     font-size: 1.2rem;
     margin-left: 0.1rem;
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
 }
 .results-item>.results-item-link>.results-song-information>.sub-text{
     font-size: 0.8rem;
     margin-left: 0.1rem;
     color: gray;
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
 }
 .results-song-information{
     display: flex;
@@ -148,6 +161,7 @@ h2{
     display: flex;
     justify-content: right;
     align-items: center;
+    padding-right: .5rem;
 }
 
 </style>

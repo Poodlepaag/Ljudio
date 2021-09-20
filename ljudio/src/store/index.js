@@ -2,16 +2,22 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
+    // Search specific
     songResults: [],
+    songResult: {},
     artistResults: [],
+    artistResult: {},
     searchString: '',
 
     // Player specific
-    loadedSong: {},
+    loadedSong: null,
     previousSongs: [],
-    songQueue: [],
+    queue: [],
   },
   mutations: {
+    setArtistResult(state, data){
+      state.artistResult = data;
+    },
     setArtistResults(state, data){
       state.artistResults = data;
     },
@@ -24,17 +30,24 @@ export default createStore({
     setLoadedSong(state, data){
       state.loadedSong = data;
     },
-    moveSongFromQueueToLoaded(state){
-      state.loadedSong = state.songQueue.shift();
+    moveFromQueueToLoaded(state){
+      state.loadedSong = state.queue.shift();
     },
     moveFromLoadedToPrevious(state){
       state.previousSongs.unshift(state.loadedSong);
     },
     moveFromPreviousToLoaded(state){
-      state.songQueue.unshift(state.loadedSong);
-      state.loadedSong = state.previousSongs[0];
-      state.previousSongs.shift();
+      state.loadedSong = state.previousSongs.shift();
     },
+    moveFromLoadedToQueue(state){
+      state.queue.unshift(state.loadedSong);
+    },
+    setTheLoadedSong(state, data){
+      state.loadedSong = data;
+    },
+    addToQueue(state, data){
+      state.queue.push(data);
+    }
     
   },
   actions: {
@@ -51,17 +64,31 @@ export default createStore({
       console.log(data);
       commit('setSongResults', data);
     },
-    nextSong({commit}){
-      commit('moveSongFromQueueToLoaded');
+    async getSingleSongResult({commit}, videoId){
+      let response = await fetch(`https://yt-music-api.herokuapp.com/api/yt/songs/:${videoId}`)
+      let data = await response.json();
+      console.log(data);
+      commit('')    
     },
-    moveFromLoadedToPrevious({commit}){
+    unloadAndSendToQueue({commit}){
+      commit('moveFromLoadedToQueue');
+    },
+    unloadAndSendToPrevious({commit}){
       commit('moveFromLoadedToPrevious');
     },
-    moveFromPreviousToLoaded({commit}){
+    loadByFetchFromPrevious({commit}){
       commit('moveFromPreviousToLoaded');
     },
-    getLoadedSongFromQueue({commit}){
-      commit('moveSongFromQueueToLoaded');
+    loadByFetchFromQueue({commit}){
+      commit('moveFromQueueToLoaded');
+    },
+    setLoadedSong({commit}, data){
+      console.log(data);
+      commit('setTheLoadedSong', data)
+    },
+    addToQueue({commit}, data){
+      console.log(data);
+      commit('addToQueue', data)
     },
   }
 })
