@@ -1,8 +1,8 @@
 <template>
     <div class="search-wrapper">
         <Searchbar/>
-        <div class="header-border">
-            <h2 v-on:click="toggleSongs()">SONGS</h2>
+        <div class="header-border" v-on:click="toggleSongs()">
+            <h2>SONGS</h2><i class="fas fa-chevron-down" id="songChevronIcon"></i>
         </div>
         <ul id="listOfSongs">
             <li v-for="(song, index) in getUpdatedSongResults" v-bind:key="index" class="results-item">
@@ -17,8 +17,8 @@
                 </a>
             </li>
         </ul>
-        <div class="header-border">
-            <h2 v-on:click="toggleArtists()">ARTISTS</h2>
+        <div class="header-border" v-on:click="toggleArtists()">
+            <h2>ARTISTS</h2><i class="fas fa-chevron-down" id="artistChevronIcon"></i>
         </div>
         <ul id="listOfArtists">
             <li v-for="(artist, index) in getUpdatedArtistResults" v-bind:key="index" class="results-item">
@@ -69,23 +69,33 @@ export default {
 
         // Visual settings only
         toggleSongs(){
-            var listOfSongs = document.getElementById('listOfSongs');
+            let listOfSongs = document.getElementById('listOfSongs');
+            let chevronIcon = document.getElementById('songChevronIcon');
 
             if(listOfSongs.style.display === "none"){
                 listOfSongs.style.display = "block";
+                chevronIcon.classList.remove('fa-chevron-up');
+                chevronIcon.classList.add('fa-chevron-down');
             }
             else{
                 listOfSongs.style.display = "none";
+                chevronIcon.classList.remove('fa-chevron-down');
+                chevronIcon.classList.add('fa-chevron-up');
             }
         },
         toggleArtists(){
             var listOfArtists = document.getElementById('listOfArtists');
+            let chevronIcon = document.getElementById('artistChevronIcon');
             
             if(listOfArtists.style.display === "none"){
                 listOfArtists.style.display = "block";
+                chevronIcon.classList.remove('fa-chevron-up');
+                chevronIcon.classList.add('fa-chevron-down');
             }
             else{
                 listOfArtists.style.display = "none";
+                chevronIcon.classList.remove('fa-chevron-down');
+                chevronIcon.classList.add('fa-chevron-up');
             }
         },
     }
@@ -104,6 +114,19 @@ h2{
     border-bottom: 1px #334756 solid;
     padding: 0.5rem 0;
     margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 1rem;
+    align-items: center;
+}
+.header-border:hover{
+    background-color: rgba(255,255,255,0.01);
+    cursor: pointer;
+}
+.header-border>i{
+    margin-left: 1rem;
+    font-size: 1.2rem;
+    color: #FF4C29;
 }
 .search-wrapper{
     width: 100%;
