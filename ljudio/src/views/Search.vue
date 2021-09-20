@@ -2,7 +2,7 @@
     <div class="search-wrapper">
         <Searchbar/>
         <div class="header-border">
-            <h2>SONGS</h2>
+            <h2 v-on:click="toggleDisplay(className)" class="listOfSongs">SONGS</h2>
         </div>
         <ul>
             <li v-for="(song, index) in getUpdatedSongResults" v-bind:key="index" class="results-item">
@@ -13,7 +13,7 @@
             </li>
         </ul>
         <div class="header-border">
-            <h2>ARTISTS </h2>
+            <h2>ARTISTS</h2>
         </div>
         <ul>
             <li v-for="(artist, index) in getUpdatedArtistResults" v-bind:key="index" class="results-item">
@@ -37,6 +37,8 @@ export default {
     data() {
         return {
             results: [],
+            numberOfSongs: 0,
+            numberOfArtists: 0,
         }
     },
     computed: {

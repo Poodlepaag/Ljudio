@@ -5,34 +5,52 @@
       <p class="artist-name">{{ loadedSong.artist.name }}</p>
     </div>
     <div class="player-controller">
-      <div class="slidewrapper">
-        <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
-      </div>
       <div class="buttons-wrapper">
-        <button class="btn-small"><i class="fas fa-backward white"></i></button>
+        <button class="btn-small" v-on:click="previous"><i class="fas fa-backward white"></i></button>
         <button class="btn-normal" v-on:click="play"><i class="fas fa-play white"></i></button>
-        <button class="btn-small"><i class="fas fa-forward white"></i></button>
+        <button class="btn-small" v-on:click="next"><i class="fas fa-forward white"></i></button>
       </div>
     </div>
     <div class="extra-controller">
-      <input type="range" min="0" max="100" value="20" class="volume-slider" v-on:mousemove="volumeControl" id="myVolume">
+      <input type="range" min="0" max="100" value="20" class="volume-slider" v-on:change="volumeControl" id="myVolume">
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      volume: 30,
+      currentTime: 0,
+    }
+  },
   methods:{
     play(){
-      window.player.loadVideoById(this.$store.state.loadedSong.videoId);
-      window.player.playVideo();
-    },
-    pause(){
-      window.player.pauseVideo()
+      if(window.player.getPlayerState() === -1 || window.player.getPlayerState === 0){
+        window.player.loadVideoById(this.loadedSong);
+        window.player.playVideo();
+      }
+      else if(window.player.getPlayerState() === 1){
+        
+        window.player.pauseVideo();
+      }
+      else{
+        window.player.playVideo();
+      }
     },
     volumeControl(){
       window.player.setVolume(document.getElementById('myVolume').value);
-    }
+    },
+    next(){
+      this.$store.state.loadedSong = this.$store.state.songQueue[0];
+      window.player.play(this.$store.state.songQueue[0].videoId);
+      this.$store.state.songQueue.splice[0];
+    },
+    previous(){
+      this.$store.state.loadedSong = this.$store.state.previousSongs[0];
+      window.player.play(this.LoadedSong);
+    },
   },
   computed: {
     loadedSong(){
@@ -40,6 +58,8 @@ export default {
     },
   },
 }
+
+
 </script>
 
 <style scoped>

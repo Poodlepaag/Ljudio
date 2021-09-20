@@ -12,11 +12,6 @@ export default createStore({
       artist: {
         name: ''
       },
-      thumbnails: [
-        {
-          url: '',
-        }
-      ]
     },
     previousSongs: [],
     songQueue: [],
