@@ -2,20 +2,25 @@
     <div class="search-wrapper">
         <Searchbar/>
         <div class="header-border">
-            <h2 v-on:click="toggleDisplay(className)" class="listOfSongs">SONGS</h2>
+            <h2 v-on:click="toggleSongs()">SONGS</h2>
         </div>
-        <ul>
+        <ul id="listOfSongs">
             <li v-for="(song, index) in getUpdatedSongResults" v-bind:key="index" class="results-item">
                 <a class="results-item-link" v-on:click.prevent="click" v-on:dblclick="setLoadedSong(song)" href="#">
-                    <p class="main-text">{{ song.name }}</p>
-                    <p class="sub-text">{{ song.artist.name}}</p>
+                    <div class="results-song-information">
+                        <span class="main-text">{{ song.name }}</span>
+                        <span class="sub-text">{{ song.artist.name}}</span>
+                    </div>
+                    <div class="results-song-alternatives">
+                        <button class="add-to-playlist" v-on:click="addToSongQueue(song)">Add To Queue</button>
+                    </div>
                 </a>
             </li>
         </ul>
         <div class="header-border">
-            <h2>ARTISTS</h2>
+            <h2 v-on:click="toggleArtists()">ARTISTS</h2>
         </div>
-        <ul>
+        <ul id="listOfArtists">
             <li v-for="(artist, index) in getUpdatedArtistResults" v-bind:key="index" class="results-item">
                 <a class="results-item-link" v-on:click.prevent="click" href="#">
                     <p class="main-text">{{ artist.name }}</p>
@@ -58,6 +63,32 @@ export default {
             window.player.playVideo();
             this.$store.state.loadedSong = song;
         },
+        toggleSongs(){
+            var listOfSongs = document.getElementById('listOfSongs');
+
+            if(listOfSongs.style.display === "none"){
+                listOfSongs.style.display = "block";
+            }
+            else{
+                listOfSongs.style.display = "none";
+            }
+        },
+        toggleArtists(){
+            var listOfArtists = document.getElementById('listOfArtists');
+            
+            if(listOfArtists.style.display === "none"){
+                listOfArtists.style.display = "block";
+            }
+            else{
+                listOfArtists.style.display = "none";
+            }
+        },
+        addToSongQueue(song){
+            let nextButton = document.getElementById('nextButton');
+            nextButton.disabled = false;
+            this.$store.state.songQueue.push(song);
+            console.log(this.$store.state.songQueue);
+        }
     }
 }
 </script>
@@ -81,6 +112,7 @@ h2{
     margin: 0.5rem 0;
     height: 3.5rem;
     background-color: rgba(51, 71, 86, 0.1);
+    display: flex;
 }
 .results-item:hover{
     background-color: rgba(51, 71, 86, 0.3);
@@ -88,20 +120,34 @@ h2{
 .results-item>.results-item-link{
     text-decoration: none;
     color: white;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 50% 50%;
+    margin: auto;
     height: 100%;
-    cursor:default;
+    width: 100%;
+    cursor: default;
 }
-.results-item>.results-item-link>.main-text{
+.results-item>.results-item-link>.results-song-information>.main-text{
     font-size: 1.2rem;
     margin-left: 0.1rem;
 }
-.results-item>.results-item-link>.sub-text{
+.results-item>.results-item-link>.results-song-information>.sub-text{
     font-size: 0.8rem;
     margin-left: 0.1rem;
     color: gray;
+}
+.results-song-information{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: right;
+    padding-left: .5rem;
+}
+.results-song-alternatives{
+    display: flex;
+    justify-content: right;
+    align-items: center;
 }
 
 </style>

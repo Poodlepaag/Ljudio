@@ -6,9 +6,9 @@
     </div>
     <div class="player-controller">
       <div class="buttons-wrapper">
-        <button class="btn-small" v-on:click="previous"><i class="fas fa-backward white"></i></button>
-        <button class="btn-normal" v-on:click="play"><i class="fas fa-play white"></i></button>
-        <button class="btn-small" v-on:click="next"><i class="fas fa-forward white"></i></button>
+        <button class="btn-small" id="prevButton" v-on:click="previous"><i class="fas fa-backward white"></i></button>
+        <button class="btn-normal" v-on:click="play"><i class="fas fa-play white" id="playOrPause"></i></button>
+        <button class="btn-small" id="nextButton" v-on:click="next"><i class="fas fa-forward white"></i></button>
       </div>
     </div>
     <div class="extra-controller">
@@ -21,41 +21,54 @@
 export default {
   data() {
     return {
-      volume: 30,
       currentTime: 0,
     }
   },
   methods:{
     play(){
-      if(window.player.getPlayerState() === -1 || window.player.getPlayerState === 0){
-        window.player.loadVideoById(this.loadedSong);
-        window.player.playVideo();
-      }
-      else if(window.player.getPlayerState() === 1){
-        
+      if(window.player.getPlayerState() === 1){
         window.player.pauseVideo();
+        let icon = document.getElementById('playOrPause')
+        icon.classList.remove('fa-pause');
+        icon.classList.add('fa-play')
+        
       }
       else{
         window.player.playVideo();
+        let icon = document.getElementById('playOrPause')
+        icon.classList.remove('fa-play');
+        icon.classList.add('fa-pause')
       }
     },
     volumeControl(){
       window.player.setVolume(document.getElementById('myVolume').value);
     },
     next(){
-      this.$store.state.loadedSong = this.$store.state.songQueue[0];
-      window.player.play(this.$store.state.songQueue[0].videoId);
-      this.$store.state.songQueue.splice[0];
+      if(this.songQueue.length > 0){
+        this.$store.dispatch('moveFromLoadedToPrevious');
+        this.$store.dispatch('nextSong');
+        window.player.loadVideoById(this.loadedSong);
+        window.player.playVideo();
+      }
     },
     previous(){
-      this.$store.state.loadedSong = this.$store.state.previousSongs[0];
-      window.player.play(this.LoadedSong);
+      if(this.previousSongs.length > 0){
+        this.$store.dispatch('moveFromPreviousToLoaded');
+        window.player.loadVideoById(this.$store.state.loadedSong);
+        window.player.playVideo();
+      }
     },
   },
   computed: {
     loadedSong(){
       return this.$store.state.loadedSong;
     },
+    songQueue(){
+      return this.$store.state.songQueue;
+    },
+    previousSongs(){
+      return this.$store.state.previousSongs;
+    }
   },
 }
 

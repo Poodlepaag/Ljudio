@@ -7,12 +7,7 @@ export default createStore({
     searchString: '',
 
     // Player specific
-    loadedSong: {
-      name: '',
-      artist: {
-        name: ''
-      },
-    },
+    loadedSong: {},
     previousSongs: [],
     songQueue: [],
   },
@@ -29,6 +24,18 @@ export default createStore({
     setLoadedSong(state, data){
       state.loadedSong = data;
     },
+    moveSongFromQueueToLoaded(state){
+      state.loadedSong = state.songQueue.shift();
+    },
+    moveFromLoadedToPrevious(state){
+      state.previousSongs.unshift(state.loadedSong);
+    },
+    moveFromPreviousToLoaded(state){
+      state.songQueue.unshift(state.loadedSong);
+      state.loadedSong = state.previousSongs[0];
+      state.previousSongs.shift();
+    },
+    
   },
   actions: {
     async getArtistResults({commit}, searchString){
@@ -44,5 +51,17 @@ export default createStore({
       console.log(data);
       commit('setSongResults', data);
     },
-  },
+    nextSong({commit}){
+      commit('moveSongFromQueueToLoaded');
+    },
+    moveFromLoadedToPrevious({commit}){
+      commit('moveFromLoadedToPrevious');
+    },
+    moveFromPreviousToLoaded({commit}){
+      commit('moveFromPreviousToLoaded');
+    },
+    getLoadedSongFromQueue({commit}){
+      commit('moveSongFromQueueToLoaded');
+    },
+  }
 })
