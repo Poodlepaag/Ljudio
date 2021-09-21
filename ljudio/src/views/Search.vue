@@ -39,11 +39,18 @@ export default {
     components: {
         Searchbar,
     },
+    data(){
+        return{
+            isLoaded: false,
+        }
+    },
     computed: {
         getUpdatedArtistResults(){
+            this.isLoaded = true;
             return this.$store.state.artistResults.content;
         },
         getUpdatedSongResults(){
+            this.isLoaded = true;
             return this.$store.state.songResults.content;
         },
         getUpdatedSearchString(){
@@ -104,6 +111,12 @@ export default {
 </script>
 
 <style scoped>
+#listOfSongs{
+    display: block;
+}
+#listOfArtists{
+    display: block;
+}
 #addToQueueIcon{
     font-size: 1.5rem;
 }
@@ -118,6 +131,9 @@ h2{
     justify-content: space-between;
     padding-right: 1rem;
     align-items: center;
+}
+.header-border>span{
+    display: flex;
 }
 .header-border:hover{
     background-color: rgba(255,255,255,0.01);

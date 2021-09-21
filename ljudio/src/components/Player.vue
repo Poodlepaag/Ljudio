@@ -53,7 +53,7 @@ export default {
       if(this.queue.length > 0){
         this.$store.dispatch('unloadAndSendToPrevious');
         this.$store.dispatch('loadByFetchFromQueue');
-        window.player.loadVideoById(this.$store.state.loadedSong);
+        window.player.loadVideoById(loadedSong.videoId);
         window.player.playVideo();
         this.playAndPause();
       }
@@ -63,7 +63,7 @@ export default {
       if(this.previousSongs.length > 0){
         this.$store.dispatch('unloadAndSendToQueue');
         this.$store.dispatch('loadByFetchFromPrevious');
-        window.player.loadVideoById(this.$store.state.loadedSong);
+        window.player.loadVideoById(loadedSong.videoId);
         window.player.playVideo();
         this.playAndPause();
         if(this.previousSongs.length === 0){
