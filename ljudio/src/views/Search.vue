@@ -2,14 +2,14 @@
     <div class="search-wrapper">
         <Searchbar/>
         <div class="header-border" v-on:click="toggleSongs()">
-            <h2>SONGS</h2><i class="fas fa-chevron-down" id="songChevronIcon"></i>
+            <h2>SONGS</h2><h2 v-if="getUpdatedSongResults">({{getUpdatedSongResults.length}})</h2><i class="fas fa-chevron-down" id="songChevronIcon"></i>
         </div>
         <ul id="listOfSongs">
             <li v-for="(song, index) in getUpdatedSongResults" v-bind:key="index" class="results-item">
                 <a class="results-item-link" v-on:click.prevent="click" v-on:dblclick="setLoadedSong(song)" href="#">
                     <div class="results-song-information">
-                        <span class="main-text">{{ song.name }}</span>
-                        <span class="sub-text">{{ song.artist.name}}</span>
+                        <span class="main-text"><router-link class="router-link-main-text" v-if="song.videoId" :to="{ name: 'Song', params: { videoId: song.videoId }}">{{ song.name }}</router-link></span>
+                        <span class="sub-text"><router-link class="router-link-sub-text" v-if="song.artist.browseId" :to="{ name: 'Artist', params: { browseId: song.artist.browseId }}">{{ song.artist.name}}</router-link></span>
                     </div>
                     <div class="results-song-alternatives">
                         <i class="fas fa-plus" id="addToQueueIcon" v-on:click="addToQueue(song)"></i>
@@ -18,12 +18,12 @@
             </li>
         </ul>
         <div class="header-border" v-on:click="toggleArtists()">
-            <h2>ARTISTS</h2><i class="fas fa-chevron-down" id="artistChevronIcon"></i>
+            <h2>ARTISTS</h2><h2 v-if="getUpdatedArtistResults">({{getUpdatedArtistResults.length}})</h2><i class="fas fa-chevron-down" id="artistChevronIcon"></i>
         </div>
         <ul id="listOfArtists">
             <li v-for="(artist, index) in getUpdatedArtistResults" v-bind:key="index" class="results-item">
                 <a class="results-item-link" v-on:click.prevent="click" href="#">
-                    <span class="main-text">{{ artist.name }}</span>
+                    <span class="main-text"><router-link class="router-link-main-text" v-if="artist.browseId" :to="{ name: 'Artist', params: { browseId: artist.browseId }}">{{ artist.name }}</router-link></span>
                 </a>
             </li>
         </ul>
@@ -73,11 +73,15 @@ export default {
             this.$store.dispatch('addToQueue', song);
             console.log(this.$store.state.songQueue);
         },
+        createArtistSearch(){
+            this.$store.dispatch('getSingleArtistResult')
+        },
 
         // Visual settings only
         toggleSongs(){
             let listOfSongs = document.getElementById('listOfSongs');
             let chevronIcon = document.getElementById('songChevronIcon');
+            let numberOfSongResults = document.getElementById('numberOfSongResults')
 
             if(listOfSongs.style.display === "none"){
                 listOfSongs.style.display = "block";
@@ -111,6 +115,20 @@ export default {
 </script>
 
 <style scoped>
+.router-link-main-text{
+    text-decoration: none;
+    color: white;
+}
+.router-link-main-text:hover{
+    text-decoration: underline;
+}
+.router-link-sub-text{
+    text-decoration: none;
+    color: gray;
+}
+.router-link-sub-text:hover{
+    text-decoration: underline;
+}
 #listOfSongs{
     display: block;
 }
@@ -172,6 +190,7 @@ h2{
 }
 .results-item>.results-item-link>.results-song-information>.main-text{
     font-size: 1.2rem;
+    color: white;
     margin-left: 0.1rem;
     display: inline-block;
     width: 100%;

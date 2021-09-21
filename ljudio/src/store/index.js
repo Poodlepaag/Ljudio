@@ -24,6 +24,9 @@ export default createStore({
     setSongResults(state, data){
       state.songResults = data;
     },
+    setSongResult(state, data){
+      state.songResult = data;
+    },
     setSearchString(state, data){
       state.searchString = data;
     },
@@ -68,7 +71,7 @@ export default createStore({
       let response = await fetch(`https://yt-music-api.herokuapp.com/api/yt/songs/:${videoId}`)
       let data = await response.json();
       console.log(data);
-      commit('')    
+      commit('setSongResult', data)    
     },
     unloadAndSendToQueue({commit}){
       commit('moveFromLoadedToQueue');

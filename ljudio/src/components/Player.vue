@@ -1,9 +1,9 @@
 <template>
   <div class="player-wrapper">
     <div class="song-information" v-if="isLoaded == true">
-      <span class="statusOfPlayer" id="statusOfPlayer"> Now playing</span>
-      <span class="song-name">{{ loadedSong.name }}</span>
-      <span class="artist-name">{{ loadedSong.artist.name }}</span>
+      <span class="statusOfPlayer" id="statusOfPlayer">Now playing</span>
+      <span class="song-name"><router-link class="router-link-main-text" v-if="loadedSong.name" :to="{ name: 'Song', params: { videoId: loadedSong.videoId }}">{{ loadedSong.name }}</router-link></span>
+      <span class="artist-name"><router-link class="router-link-sub-text" v-if="loadedSong.artist.browseId" :to="{ name: 'Artist', params: { browseId: loadedSong.artist.browseId }}">{{ loadedSong.artist.name }}</router-link></span>
     </div>
     <div class="player-controller">
       <div class="buttons-wrapper">
@@ -53,7 +53,7 @@ export default {
       if(this.queue.length > 0){
         this.$store.dispatch('unloadAndSendToPrevious');
         this.$store.dispatch('loadByFetchFromQueue');
-        window.player.loadVideoById(loadedSong.videoId);
+        window.player.loadVideoById(this.$store.state.loadedSong.videoId);
         window.player.playVideo();
         this.playAndPause();
       }
@@ -63,7 +63,7 @@ export default {
       if(this.previousSongs.length > 0){
         this.$store.dispatch('unloadAndSendToQueue');
         this.$store.dispatch('loadByFetchFromPrevious');
-        window.player.loadVideoById(loadedSong.videoId);
+        window.player.loadVideoById(this.$store.state.loadedSong.videoId);
         window.player.playVideo();
         this.playAndPause();
         if(this.previousSongs.length === 0){
@@ -179,5 +179,19 @@ export default {
 
 .white{
   color: white;
+}
+.router-link-main-text{
+    text-decoration: none;
+    color: white;
+}
+.router-link-main-text:hover{
+    text-decoration: underline;
+}
+.router-link-sub-text{
+    text-decoration: none;
+    color: gray;
+}
+.router-link-sub-text:hover{
+    text-decoration: underline;
 }
 </style>
