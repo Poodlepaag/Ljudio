@@ -12,7 +12,7 @@
                         <span class="sub-text"><router-link class="router-link-sub-text" v-if="song.artist.browseId" :to="{ name: 'Artist', params: { browseId: song.artist.browseId }}">{{ song.artist.name}}</router-link></span>
                     </div>
                     <div class="results-song-alternatives">
-                        <i class="fas fa-plus" id="addToQueueIcon" v-on:click="addToQueue(song)"></i>
+                       <button v-on:click="addToQueue(song)"><p>Add to queue</p><i class="fas fa-plus mouseover" id="addToQueueIcon"></i></button>
                     </div>
                 </a>
             </li>
@@ -71,7 +71,7 @@ export default {
             let nextButton = document.getElementById('nextButton');
             nextButton.disabled = false;
             this.$store.dispatch('addToQueue', song);
-            console.log(this.$store.state.songQueue);
+            window.alert(song.name + " added to queue!");
         },
         createArtistSearch(){
             this.$store.dispatch('getSingleArtistResult')
@@ -81,7 +81,6 @@ export default {
         toggleSongs(){
             let listOfSongs = document.getElementById('listOfSongs');
             let chevronIcon = document.getElementById('songChevronIcon');
-            let numberOfSongResults = document.getElementById('numberOfSongResults')
 
             if(listOfSongs.style.display === "none"){
                 listOfSongs.style.display = "block";
@@ -115,6 +114,20 @@ export default {
 </script>
 
 <style scoped>
+button{
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+button:hover{
+    color: #FF4C29;
+}
+button>p{
+    padding-right: .8rem;
+}
 .router-link-main-text{
     text-decoration: none;
     color: white;

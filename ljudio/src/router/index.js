@@ -24,7 +24,8 @@ const routes = [
   {
     path: '/artist/:browseId',
     name: 'Artist',
-    component: Artist
+    component: Artist,
+    props: true
   },
   {
     path: '/song/:videoId',
