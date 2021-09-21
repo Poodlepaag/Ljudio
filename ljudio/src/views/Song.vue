@@ -1,9 +1,7 @@
 <template>
     <body>
         <span>
-            <p v-for="item in getSong.content" :key="item">
-                {{item.name}}
-            </p>
+            <p>{{getSong.name}}</p>
         </span>
     </body>
 </template>

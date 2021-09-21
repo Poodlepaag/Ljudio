@@ -61,7 +61,7 @@ export default createStore({
       commit('setSearchString', searchString);
     },
     async getSingleArtistResult({commit}, browseId){
-      let response = await fetch(`https://yt-music-api.herokuapp.com/api/yt/artists/:${browseId}`);
+      let response = await fetch(`https://yt-music-api.herokuapp.com/api/yt/artist/${browseId}`);
       let data = await response.json();
       commit('setArtistResult', data);
     },
