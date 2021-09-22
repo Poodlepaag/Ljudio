@@ -55,7 +55,7 @@ export default createStore({
   },
   actions: {
     async getArtistResults({commit}, searchString){
-      let response = await fetch(`https://yt-music-api.herokuapp.com/api/yt/artists/:${searchString}`);
+      let response = await fetch(`https://yt-music-api.herokuapp.com/api/yt/artists/${searchString}`);
       let data = await response.json();
       commit('setArtistResults', data);
       commit('setSearchString', searchString);
@@ -63,15 +63,16 @@ export default createStore({
     async getSingleArtistResult({commit}, browseId){
       let response = await fetch(`https://yt-music-api.herokuapp.com/api/yt/artist/${browseId}`);
       let data = await response.json();
+      console.log(data);
       commit('setArtistResult', data);
     },
     async getSongResults({commit}, searchString){
-      let response = await fetch(`https://yt-music-api.herokuapp.com/api/yt/songs/:${searchString}`);
+      let response = await fetch(`https://yt-music-api.herokuapp.com/api/yt/songs/${searchString}`);
       let data = await response.json();
       commit('setSongResults', data);
     },
     async getSingleSongResult({commit}, videoId){
-      let response = await fetch(`https://yt-music-api.herokuapp.com/api/yt/songs/:${videoId}`)
+      let response = await fetch(`https://yt-music-api.herokuapp.com/api/yt/songs/${videoId}`)
       let data = await response.json();
       commit('setSongResult', data)    
     },

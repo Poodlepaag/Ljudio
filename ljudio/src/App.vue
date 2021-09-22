@@ -33,11 +33,16 @@ export default {
   display: flex;
   flex-direction: column;
   color: white;
+  position: relative;
+  margin: auto;
+  overflow-x: hidden;
 }
 .app-header{
   width: 60%;
+  top: 0;
   margin: auto;
   align-items: center;
+  padding: .5rem;
 }
 .app-main{
   width: 60%;
@@ -45,12 +50,36 @@ export default {
   flex-grow: 1;
   justify-content: center;
   overflow: scroll;
-  padding-bottom: 7rem;
+  padding-bottom: 5rem;
+  bottom: 0;
 }
 .app-footer{
   width: 100%;
-  height: 7rem;
+  height: 5rem;
   position: fixed;
   bottom: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .app-header{
+    width: 100%;
+  }
+  .app-main{
+    width: 100%;
+    font-size: 1.2rem;
+    padding-bottom: 5rem;
+  }
+  .app-footer{
+    height: 5rem;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .app-main{
+    padding-bottom: 10rem;
+  }
+  .app-footer{
+    height: 10rem;
+  }
 }
 </style>

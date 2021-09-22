@@ -39,4 +39,11 @@ export default {
   opacity: 0.2;
   font-size: 4.4rem;
 }
+
+@media screen and (max-width: 1024px){
+  .home-list{
+    width: 20%;
+    margin: auto;
+  }
+}
 </style>

@@ -12,7 +12,8 @@
                         <span class="sub-text"><router-link class="router-link-sub-text" v-if="song.artist.browseId" :to="{ name: 'Artist', params: { browseId: song.artist.browseId }}">{{ song.artist.name}}</router-link></span>
                     </div>
                     <div class="results-song-alternatives">
-                       <button v-on:click="addToQueue(song)"><p>Add to queue</p><i class="fas fa-plus mouseover" id="addToQueueIcon"></i></button>
+                        <button v-on:click="setLoadedSong(song)" class="playButton"><i class="fas fa-play white"></i></button>
+                        <button v-on:click="addToQueue(song)" class="addToQueueButton"><p>Add to queue</p><i class="fas fa-plus mouseover" id="addToQueueIcon"></i></button>
                     </div>
                 </a>
             </li>
@@ -125,8 +126,10 @@ button{
 button:hover{
     color: #FF4C29;
 }
-button>p{
-    padding-right: .8rem;
+.playButton{
+    display: none;
+    margin-right: 1rem;
+    font-size: 1.5rem;
 }
 .router-link-main-text{
     text-decoration: none;
@@ -156,11 +159,10 @@ h2{
 }
 .header-border{
     border-bottom: 1px #334756 solid;
-    padding: 0.5rem 0;
+    padding: .5rem .5rem;
     margin-bottom: 0.5rem;
     display: flex;
     justify-content: space-between;
-    padding-right: 1rem;
     align-items: center;
 }
 .header-border>span{
@@ -234,5 +236,18 @@ h2{
     align-items: center;
     padding-right: .5rem;
 }
+p{
+    display: flex;
+    justify-content: center;
+    padding-right: 0.8rem;
+}
 
+@media screen and (max-width: 1024px){
+    p{
+        display: none
+    }
+    .playButton{
+        display: inline-block;
+    }
+}
 </style>

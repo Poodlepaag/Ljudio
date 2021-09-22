@@ -13,7 +13,8 @@
       </div>
     </div>
     <div class="extra-controller">
-      <input type="range" min="0" max="100" value="20" class="volume-slider" v-on:change="volumeControl" id="myVolume">
+      <i class="fas fa-volume-up"></i>
+      <input type="range" min="0" max="100" value="100" class="volume-slider" v-on:change="volumeControl" id="myVolume">
     </div>
   </div>
 </template>
@@ -139,9 +140,13 @@ export default {
   grid-row: 1/2;
   grid-column: 3/4;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
+  padding-right: 1rem;
+}
+.extra-controller>i{
+  margin-right: 1rem;
+  font-size: 1.5rem;
 }
 
 .btn-normal{
@@ -194,4 +199,47 @@ export default {
 .router-link-sub-text:hover{
     text-decoration: underline;
 }
+
+@media screen and (max-width: 600px){
+  .extra-controller{
+    display: none;
+  }
+  .player-wrapper{
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 100%;
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .song-information{
+    grid-row: 1/2;
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: rgba(2,17, 29,0.5)
+  }
+  .player-controller{
+    grid-column: 1;
+    grid-row: 2/3;
+    display: flex;
+    height: 100%;
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio:0){
+  input[type='range']{
+    overflow: hidden;
+    -webkit-appearance: none;
+    background-color: lightgray;
+  }
+  input[type='range']::-webkit-slider-thumb {
+    width: 10px;
+    -webkit-appearance: none;
+    height: 10px;
+    cursor: ew-resize;
+    background: #434343;
+    box-shadow: -80px 0 0 80px #FF4C29;
+  }
+}
+
 </style>

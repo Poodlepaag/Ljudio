@@ -2,7 +2,6 @@
     <div class="header-wrapper">
         <router-link to="/">Home</router-link>
         <router-link to="/search">Search</router-link>
-        <router-link to="/about">About</router-link>
     </div>
 </template>
 
@@ -22,5 +21,12 @@ export default {
     }
     a:hover{
         color: #FF4C29;
+    }
+
+    @media screen and (max-width: 1024px){
+        .header-wrapper{
+            display: flex;
+            justify-content: center;
+        }
     }
 </style>
